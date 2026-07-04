@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Templates — MetricForge</title>
+<meta name="description" content="Ready-to-customize analytics templates for operations teams — calculators, dashboards, and automation kits with full source code and demo data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .how-band{background:#fff; border:1px solid var(--border); border-radius:14px; padding:32px; display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-bottom:56px;}
+  .how-step .step-num{font-family:'Poppins'; font-weight:800; color:var(--teal); font-size:0.85rem; letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px;}
+  .how-step h3{font-size:1rem; font-weight:600; margin-bottom:6px;}
+  .how-step p{color:var(--slate); font-size:0.88rem;}
+  .bundle{border:2px solid var(--teal); position:relative;}
+  .bundle-badge{position:absolute; top:-12px; right:20px; background:var(--amber); color:var(--navy); font-weight:700; font-size:0.75rem; padding:4px 12px; border-radius:999px;}
+  @media(max-width:860px){ .how-band{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="nav-links">
+      <a href="templates.html" class="active">Templates</a>
+      <a href="services.html">Services</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="nav-cta">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="page-head">
+    <span class="eyebrow">● Full source code with every purchase</span>
+    <h1>Templates built from real ops problems</h1>
+    <p>Each tool started as a solution to an actual operations bottleneck. The versions here run on demo data — buy one, swap in your data, add your branding, and it's yours.</p>
+  </header>
+
+  <div class="how-band">
+    <div class="how-step">
+      <div class="step-num">Step 1 — Preview</div>
+      <h3>Try the live demo</h3>
+      <p>Every template has a working demo with sample data, so you know exactly what you're buying.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">Step 2 — Purchase</div>
+      <h3>Get the full source</h3>
+      <p>You receive the complete files — HTML/JS, Excel, or Power BI — plus a setup guide. No locked features.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">Step 3 — Customize</div>
+      <h3>Make it yours</h3>
+      <p>Swap in your data, colors, and logo. Need help? Customization service is available on every template.</p>
+    </div>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">CT</div>
+      <h3>Daily Capacity Calculator</h3>
+      <p>A weighted-output calculator for teams juggling mixed task types. Enter throughput rates, task mix distribution, and shift hours — get a fair daily target per person, with an adjustable exception allowance.</p>
+      <div class="card-footer">
+        <span class="price">$29</span>
+        <a href="contact.html" class="tag-demo">View demo →</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">PB</div>
+      <h3>Ops Production Dashboard</h3>
+      <p>A star-schema Power BI template covering daily production, quality scores, and exception rates — with drill-down by team member and rolling trend views leadership actually reads.</p>
+      <div class="card-footer">
+        <span class="price">$59</span>
+        <a href="contact.html" class="tag-demo">View demo →</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">MX</div>
+      <h3>Recognition Eligibility Sheet</h3>
+      <p>An Excel formula system (COUNTIFS + MINIFS) that filters top performers against multi-month production tiers and minimum quality thresholds — the shortlist builds itself.</p>
+      <div class="card-footer">
+        <span class="price">$19</span>
+        <a href="contact.html" class="tag-demo">View demo →</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">EA</div>
+      <h3>Bulk Email Automation Kit</h3>
+      <p>Send personalized emails straight from a spreadsheet — template variables, per-row attachments, and error logging included. Python-based, works with Outlook.</p>
+      <div class="card-footer">
+        <span class="price">$25</span>
+        <a href="contact.html" class="tag-demo">View demo →</a>
+      </div>
+    </div>
+    <div class="card bundle">
+      <span class="bundle-badge">Best value</span>
+      <div class="card-icon">RB</div>
+      <h3>Full Ops Toolkit Bundle</h3>
+      <p>All four templates above, bundled with a setup walkthrough so your team is running within a day, not a week. Saves $13 versus buying separately.</p>
+      <div class="card-footer">
+        <span class="price">$119</span>
+        <a href="contact.html" class="tag-demo">Get bundle →</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">CU</div>
+      <h3>Custom Build</h3>
+      <p>Have a specific workflow to automate? Describe the problem and your data shape — you'll get a fixed-price quote and a realistic timeline before any work starts.</p>
+      <div class="card-footer">
+        <span class="price">From $150</span>
+        <a href="contact.html" class="tag-demo">Request quote →</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="cta-band">
+      <div>
+        <h2>Not sure which template fits your workflow?</h2>
+        <p>Describe what your team tracks today — you'll get a straight answer on what to buy, or whether a custom build makes more sense.</p>
+      </div>
+      <a href="contact.html" class="btn-amber">Ask before you buy →</a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="foot-links">
+      <a href="templates.html">Templates</a>
+      <a href="services.html">Services</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="copyright">© 2026 MetricForge. All templates use demo data only.</div>
+  </div>
+</footer>
+
+</body>
+</html>

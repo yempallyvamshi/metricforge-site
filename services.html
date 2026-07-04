@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Services — MetricForge</title>
+<meta name="description" content="Done-for-you report automation, Power BI dashboard builds, and workflow scripting for operations teams. Fixed-price packages, clear timelines.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .svc-detail{display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-bottom:24px;}
+  .svc-card{background:#fff; border:1px solid var(--border); border-radius:14px; padding:36px;}
+  .svc-card .svc-tag{font-family:'Poppins'; font-weight:800; font-size:0.8rem; color:var(--teal); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:14px;}
+  .svc-card h2{font-size:1.35rem; font-weight:700; margin-bottom:12px; color:var(--navy);}
+  .svc-card p{color:var(--slate); font-size:0.94rem; margin-bottom:18px;}
+  .svc-card ul{list-style:none; margin-bottom:20px;}
+  .svc-card ul li{padding-left:24px; position:relative; color:var(--slate); font-size:0.9rem; margin-bottom:8px;}
+  .svc-card ul li::before{content:"✓"; position:absolute; left:0; color:var(--teal); font-weight:700;}
+  .svc-price{font-family:'Poppins'; font-weight:700; color:var(--navy); font-size:1.1rem; padding-top:16px; border-top:1px solid var(--border);}
+  .svc-price span{color:var(--slate); font-weight:400; font-size:0.85rem; font-family:'Inter';}
+  .process{background:#fff; border:1px solid var(--border); border-radius:14px; padding:40px; margin-top:56px;}
+  .process h2{font-size:1.4rem; margin-bottom:28px;}
+  .process-steps{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
+  .p-step .p-num{width:36px; height:36px; border-radius:50%; background:var(--navy); color:var(--teal); font-family:'Poppins'; font-weight:700; display:flex; align-items:center; justify-content:center; margin-bottom:12px;}
+  .p-step h3{font-size:0.98rem; margin-bottom:6px;}
+  .p-step p{color:var(--slate); font-size:0.85rem;}
+  @media(max-width:860px){ .svc-detail{grid-template-columns:1fr;} .process-steps{grid-template-columns:1fr 1fr;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="nav-links">
+      <a href="templates.html">Templates</a>
+      <a href="services.html" class="active">Services</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" class="nav-cta">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="page-head">
+    <span class="eyebrow">● Fixed-price, clear scope</span>
+    <h1>Automation, done for you</h1>
+    <p>If your team spends hours every week copy-pasting between spreadsheets, formatting the same report, or chasing the same emails — that's a build, not a chore. Here's what MetricForge takes on.</p>
+  </header>
+
+  <div class="svc-detail">
+    <div class="svc-card">
+      <div class="svc-tag">Service 01</div>
+      <h2>Report automation</h2>
+      <p>Replace manual reporting with a pipeline that refreshes itself and lands in the right inboxes on schedule.</p>
+      <ul>
+        <li>Scheduled data refresh from Excel/CSV sources</li>
+        <li>Automatic formatting and distribution by email</li>
+        <li>Error alerts so silent failures don't happen</li>
+      </ul>
+      <div class="svc-price">From $200 <span>fixed price per pipeline</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-tag">Service 02</div>
+      <h2>Dashboard builds</h2>
+      <p>Power BI dashboards modeled around how your team actually measures performance — not a generic layout.</p>
+      <ul>
+        <li>Proper star-schema data model, not a flat table</li>
+        <li>DAX measures for trends, targets, and exceptions</li>
+        <li>Handoff documentation so your team owns it</li>
+      </ul>
+      <div class="svc-price">From $300 <span>fixed price per dashboard</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-tag">Service 03</div>
+      <h2>Workflow scripting</h2>
+      <p>Python and no-code automations (Make.com/Zapier) for repetitive data entry, reconciliation, and reminders.</p>
+      <ul>
+        <li>Spreadsheet-to-email and data-cleanup scripts</li>
+        <li>No-code flows for non-technical teams</li>
+        <li>Source code and setup guide included</li>
+      </ul>
+      <div class="svc-price">From $150 <span>fixed price per workflow</span></div>
+    </div>
+    <div class="svc-card">
+      <div class="svc-tag">Service 04</div>
+      <h2>Ongoing maintenance</h2>
+      <p>A monthly retainer that keeps your dashboards, scripts, and templates working as your data evolves.</p>
+      <ul>
+        <li>Priority fixes when something breaks</li>
+        <li>Small changes and additions each month</li>
+        <li>Quarterly review of what to automate next</li>
+      </ul>
+      <div class="svc-price">From $75/mo <span>cancel anytime</span></div>
+    </div>
+  </div>
+
+  <div class="process">
+    <h2>How a project runs</h2>
+    <div class="process-steps">
+      <div class="p-step">
+        <div class="p-num">1</div>
+        <h3>Describe the problem</h3>
+        <p>Send a short note on what your team does manually today.</p>
+      </div>
+      <div class="p-step">
+        <div class="p-num">2</div>
+        <h3>Fixed quote</h3>
+        <p>You get a price and timeline before any work begins — no hourly surprises.</p>
+      </div>
+      <div class="p-step">
+        <div class="p-num">3</div>
+        <h3>Build & review</h3>
+        <p>A working version on demo data first, then connected to your real data.</p>
+      </div>
+      <div class="p-step">
+        <div class="p-num">4</div>
+        <h3>Handoff</h3>
+        <p>Full source code, a setup guide, and a walkthrough call if needed.</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="cta-band">
+      <div>
+        <h2>What's the most repetitive thing your team did this week?</h2>
+        <p>Describe it in two sentences — you'll get an honest answer on whether it's worth automating.</p>
+      </div>
+      <a href="contact.html" class="btn-amber">Get a quote →</a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="foot-links">
+      <a href="templates.html">Templates</a>
+      <a href="services.html">Services</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="copyright">© 2026 MetricForge. All templates use demo data only.</div>
+  </div>
+</footer>
+
+</body>
+</html>

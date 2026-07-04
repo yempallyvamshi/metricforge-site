@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — MetricForge</title>
+<meta name="description" content="MetricForge builds analytics templates and automation from real operations experience — data analytics, Power BI, Excel, and Python for teams that measure their work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .about-body{max-width:760px;}
+  .about-body p{color:#3a4757; margin-bottom:18px; font-size:1.02rem;}
+  .value-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-top:48px;}
+  .value-card{background:#fff; border:1px solid var(--border); border-radius:12px; padding:28px;}
+  .value-card .v-mark{width:36px; height:36px; border-radius:9px; background:rgba(0,194,168,0.12); color:var(--teal); font-family:'Poppins'; font-weight:800; display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
+  .value-card h3{font-size:1.02rem; margin-bottom:8px;}
+  .value-card p{color:var(--slate); font-size:0.88rem;}
+  .stack-band{background:#fff; border:1px solid var(--border); border-radius:14px; padding:36px; margin-top:56px;}
+  .stack-band h2{font-size:1.3rem; margin-bottom:20px;}
+  .stack-pills{display:flex; gap:10px; flex-wrap:wrap;}
+  .stack-pill{border:1px solid var(--border); background:var(--offwhite); padding:8px 18px; border-radius:999px; font-size:0.88rem; font-weight:600; color:var(--navy);}
+  @media(max-width:860px){ .value-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="nav-links">
+      <a href="templates.html">Templates</a>
+      <a href="services.html">Services</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html" class="active">About</a>
+      <a href="contact.html" class="nav-cta">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="page-head">
+    <span class="eyebrow">● The story</span>
+    <h1>Built inside real operations, not in a vacuum</h1>
+  </header>
+
+  <div class="about-body">
+    <p>MetricForge started with a simple frustration: operations teams generate mountains of data every day, and most of it dies in spreadsheets that take hours to update and minutes to ignore.</p>
+    <p>The tools here weren't designed as products first. Each one began as a fix for a real bottleneck inside a working operations team — unfair daily targets, reports that took half a day to assemble, recognition programs run on manual cross-checking. The versions sold here carry the same logic, rebuilt on demo data with clean, documented source code.</p>
+    <p>That origin shapes how everything is built: practical over impressive, explainable over clever, and always shipped with the source so you're never locked in.</p>
+  </div>
+
+  <div class="value-grid">
+    <div class="value-card">
+      <div class="v-mark">01</div>
+      <h3>Explainable by design</h3>
+      <p>If a number can't be traced back to its inputs, people won't trust it. Every model here can be audited by the person it measures.</p>
+    </div>
+    <div class="value-card">
+      <div class="v-mark">02</div>
+      <h3>Source code, always</h3>
+      <p>Templates come with the complete files and a setup guide. Customize freely — no locked features, no subscription hostage-taking.</p>
+    </div>
+    <div class="value-card">
+      <div class="v-mark">03</div>
+      <h3>Demo data only</h3>
+      <p>Everything published on this site runs on synthetic sample data. The logic is real; the numbers are for demonstration.</p>
+    </div>
+  </div>
+
+  <div class="stack-band">
+    <h2>The stack</h2>
+    <div class="stack-pills">
+      <span class="stack-pill">Power BI</span>
+      <span class="stack-pill">DAX</span>
+      <span class="stack-pill">Excel</span>
+      <span class="stack-pill">Power Query</span>
+      <span class="stack-pill">Python</span>
+      <span class="stack-pill">pandas</span>
+      <span class="stack-pill">HTML / CSS / JS</span>
+      <span class="stack-pill">Make.com</span>
+      <span class="stack-pill">Zapier</span>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="cta-band">
+      <div>
+        <h2>Working on something similar?</h2>
+        <p>Whether it's a template question or a custom build, a short message is all it takes to start.</p>
+      </div>
+      <a href="contact.html" class="btn-amber">Get in touch →</a>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="foot-links">
+      <a href="templates.html">Templates</a>
+      <a href="services.html">Services</a>
+      <a href="blog.html">Blog</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="copyright">© 2026 MetricForge. All templates use demo data only.</div>
+  </div>
+</footer>
+
+</body>
+</html>
