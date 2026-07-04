@@ -1,1 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Setting fair daily targets when every task isn't equal — MetricForge</title>
+<meta name="description" content="How to build a weighted-output calculator for teams handling mixed task types — the formula, the edge cases, and why flat quotas fail.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+  .post-hero{padding:72px 0 40px; max-width:760px; margin:0 auto;}
+  .post-meta{display:flex; gap:14px; align-items:center; font-size:0.85rem; color:var(--slate); margin-bottom:20px;}
+  .post-meta .cat{color:var(--teal); font-weight:700; text-transform:uppercase; letter-spacing:0.05em; font-size:0.78rem;}
+  .post-hero h1{font-size:2.4rem; font-weight:800; letter-spacing:-0.02em; line-height:1.15;}
+  .post-hero .lede{color:var(--slate); font-size:1.1rem; margin-top:18px;}
+  article{max-width:760px; margin:0 auto; padding:24px 24px 64px;}
+  article h2{font-size:1.45rem; font-weight:700; margin:44px 0 16px; color:var(--navy);}
+  article p{color:#3a4757; margin-bottom:18px; font-size:1rem;}
+  article ul{margin:0 0 18px 22px; color:#3a4757;}
+  article li{margin-bottom:8px;}
+  .formula-box{
+    background:var(--navy); color:#fff; border-radius:12px; padding:26px 30px; margin:28px 0;
+    font-family:'Poppins'; font-weight:600; font-size:1.05rem; text-align:center;
+  }
+  .formula-box span{color:var(--teal);}
+  .note-box{background:rgba(255,176,32,0.1); border:1px solid rgba(255,176,32,0.4); border-radius:10px; padding:18px 22px; margin:24px 0; font-size:0.92rem; color:#5a4a1e;}
+  .post-cta{background:#fff; border:1px solid var(--border); border-radius:14px; padding:32px; margin-top:48px; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;}
+  .post-cta h3{font-size:1.15rem; margin-bottom:6px;}
+  .post-cta p{color:var(--slate); font-size:0.9rem; margin:0;}
+  @media(max-width:860px){ .post-hero h1{font-size:1.8rem;} }
+</style>
+</head>
+<body>
 
+<nav>
+  <div class="wrap">
+    <a href="../index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="nav-links">
+      <a href="../templates.html">Templates</a>
+      <a href="../services.html">Services</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html" class="nav-cta">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="post-hero">
+    <div class="post-meta">
+      <span class="cat">Case study</span><span>·</span><span>8 min read</span><span>·</span><span>Demo data</span>
+    </div>
+    <h1>Setting fair daily targets when every task isn't equal</h1>
+    <p class="lede">A flat daily quota looks fair on paper and feels unfair in practice. Here's the weighted-target model that fixed it — with the formula, the edge cases, and what the team said afterward.</p>
+  </header>
+</div>
+
+<article>
+  <h2>The problem with flat quotas</h2>
+  <p>Imagine a processing team where every person handles a different mix of task types. Some tasks take four minutes; others take forty. If everyone gets the same daily target — say, 60 items — the people assigned heavier task mixes fall behind through no fault of their own, while others coast.</p>
+  <p>The team knows it. Morale data shows it. But leadership still needs one number per person per day. The answer isn't removing targets — it's weighting them.</p>
+
+  <h2>The weighted-target model</h2>
+  <p>The core idea: a person's daily target should reflect the throughput rate of each task type they handle, weighted by how much of their day each type occupies.</p>
+  <div class="formula-box">
+    Daily Target = Σ ( <span>Rate per hour</span> × <span>% of task mix</span> ) × Working hours
+  </div>
+  <p>Three inputs, all measurable from historical data:</p>
+  <ul>
+    <li><strong>Rate per hour</strong> — how many items of each task type an average performer completes per hour</li>
+    <li><strong>Task mix %</strong> — what share of the person's assigned volume each type represents</li>
+    <li><strong>Working hours</strong> — productive hours in the shift after breaks and meetings (7 is a common real-world number for an 8-hour shift)</li>
+  </ul>
+
+  <h2>Worked example with demo data</h2>
+  <p>Say a team member's assignment for the month looks like this:</p>
+  <ul>
+    <li>Type A: 12 items/hour, 50% of their volume</li>
+    <li>Type B: 6 items/hour, 30% of their volume</li>
+    <li>Type C: 3 items/hour, 20% of their volume</li>
+  </ul>
+  <p>Their weighted rate is (12 × 0.5) + (6 × 0.3) + (3 × 0.2) = 6 + 1.8 + 0.6 = <strong>8.4 items/hour</strong>. Over a 7-hour productive day, that's a target of <strong>59 items</strong> — while a colleague with a lighter mix might correctly get 75. Different numbers, same effort. That's the point.</p>
+
+  <h2>Edge cases that will bite you</h2>
+  <ul>
+    <li><strong>Experience tiers.</strong> New joiners shouldn't carry the same rate as veterans. A simple multiplier by tenure grade (e.g. 1.0× / 1.1× / 1.2×) keeps it fair without a separate model.</li>
+    <li><strong>Exception time.</strong> Some share of the day always goes to rework, queries, and interruptions. Build in an adjustable exception percentage rather than pretending it's zero.</li>
+    <li><strong>Mix drift.</strong> Task mix changes month to month. Recalculate targets on the same cycle the mix is assigned, or the model quietly goes stale.</li>
+  </ul>
+
+  <div class="note-box">
+    <strong>Note:</strong> All figures in this post are demonstration data. The model structure is what transfers — plug in your own team's measured rates.
+  </div>
+
+  <h2>What happened after rollout</h2>
+  <p>The most telling change wasn't in the production numbers — it was in the conversations. Disputes about targets dropped because the target was now explainable: anyone could see exactly which rates and mix percentages produced their number. Fairness you can audit beats fairness you have to trust.</p>
+
+  <div class="post-cta">
+    <div>
+      <h3>Want this as a working calculator?</h3>
+      <p>The Daily Capacity Calculator template implements this exact model — enter your rates and mix, get targets instantly.</p>
+    </div>
+    <a href="../templates.html" class="btn-primary">View the template →</a>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <a href="../index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="foot-links">
+      <a href="../templates.html">Templates</a>
+      <a href="../services.html">Services</a>
+      <a href="../blog.html">Blog</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </div>
+    <div class="copyright">© 2026 MetricForge. All posts use demo data only.</div>
+  </div>
+</footer>
+
+</body>
+</html>
