@@ -1,1 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Capacity Calculator — MetricForge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#1B2A4A; --teal:#00C2A8; --slate:#5C6B7A; --offwhite:#F7F9FB; --amber:#FFB020; --border:rgba(27,42,74,0.10);}
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Inter',sans-serif; background:var(--offwhite); color:var(--navy); padding:40px 20px;}
+  h1,h2,.brand{font-family:'Poppins',sans-serif;}
+  .wrap{max-width:900px; margin:0 auto;}
+  .brand{font-weight:800; font-size:1.2rem; margin-bottom:6px; display:flex; align-items:center; gap:8px;}
+  .brand-mark{width:11px; height:11px; background:var(--teal); border-radius:3px; transform:rotate(45deg); display:inline-block;}
+  h1{font-size:1.7rem; font-weight:700; margin-bottom:6px;}
+  .sub{color:var(--slate); font-size:0.95rem; margin-bottom:32px;}
+  .panel{background:#fff; border:1px solid var(--border); border-radius:14px; padding:32px; margin-bottom:20px;}
+  .panel h2{font-size:1.05rem; margin-bottom:18px;}
+  table{width:100%; border-collapse:collapse; margin-bottom:16px;}
+  th{text-align:left; font-size:0.78rem; color:var(--slate); text-transform:uppercase; letter-spacing:0.04em; padding-bottom:10px; font-weight:600;}
+  td{padding:8px 8px 8px 0;}
+  td input{width:100%; padding:9px 10px; border:1px solid var(--border); border-radius:6px; font-family:'Inter'; font-size:0.9rem;}
+  .row-label{font-weight:600; font-size:0.9rem;}
+  .add-row{background:none; border:1px dashed var(--border); color:var(--slate); padding:8px 14px; border-radius:8px; font-size:0.85rem; cursor:pointer; font-family:'Inter'; margin-top:4px;}
+  .add-row:hover{border-color:var(--teal); color:var(--navy);}
+  .controls{display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-top:20px;}
+  .field label{display:block; font-size:0.82rem; font-weight:600; margin-bottom:6px;}
+  .field select, .field input{width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:8px; font-family:'Inter'; font-size:0.9rem;}
+  .result{background:var(--navy); color:#fff; border-radius:14px; padding:32px; text-align:center;}
+  .result .label{color:rgba(255,255,255,0.6); font-size:0.85rem; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px;}
+  .result .num{font-family:'Poppins'; font-weight:800; font-size:2.6rem;}
+  .result .num span{color:var(--teal); font-size:1.2rem; font-weight:600;}
+  .breakdown{font-size:0.8rem; color:rgba(255,255,255,0.55); margin-top:14px;}
+  footer{text-align:center; color:var(--slate); font-size:0.82rem; margin-top:32px;}
+  footer a{color:var(--teal); font-weight:600;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand"><span class="brand-mark"></span>MetricForge</div>
+  <h1>Daily Capacity Calculator</h1>
+  <p class="sub">Weighted daily target = Σ (rate per hour × % of task mix) × working hours × grade multiplier. Demo data pre-filled — edit freely.</p>
 
+  <div class="panel">
+    <h2>Task mix</h2>
+    <table>
+      <thead>
+        <tr><th style="width:34%">Task type</th><th>Rate / hour</th><th>% of mix</th></tr>
+      </thead>
+      <tbody id="rows">
+        <tr>
+          <td class="row-label">Type A</td>
+          <td><input type="number" class="rate" value="12" min="0"></td>
+          <td><input type="number" class="mix" value="50" min="0" max="100"></td>
+        </tr>
+        <tr>
+          <td class="row-label">Type B</td>
+          <td><input type="number" class="rate" value="6" min="0"></td>
+          <td><input type="number" class="mix" value="30" min="0" max="100"></td>
+        </tr>
+        <tr>
+          <td class="row-label">Type C</td>
+          <td><input type="number" class="rate" value="3" min="0"></td>
+          <td><input type="number" class="mix" value="20" min="0" max="100"></td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="add-row" onclick="addRow()">+ Add task type</button>
+
+    <div class="controls">
+      <div class="field">
+        <label>Working hours / day</label>
+        <input type="number" id="hours" value="7" step="0.5">
+      </div>
+      <div class="field">
+        <label>Grade multiplier</label>
+        <select id="grade">
+          <option value="1.0">Grade 1 (1.0×)</option>
+          <option value="1.10">Grade 2 (1.10×)</option>
+          <option value="1.20">Grade 3 (1.20×)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Exception allowance %</label>
+        <input type="number" id="exception" value="5" min="0" max="50">
+      </div>
+    </div>
+  </div>
+
+  <div class="result">
+    <div class="label">Daily target</div>
+    <div class="num" id="output">0 <span>items</span></div>
+    <div class="breakdown" id="breakdown"></div>
+  </div>
+
+  <footer>
+    Built with the MetricForge Daily Capacity Calculator template. <a href="../templates.html">More free templates →</a>
+  </footer>
+</div>
+
+<script>
+function calculate(){
+  const rates = document.querySelectorAll('.rate');
+  const mixes = document.querySelectorAll('.mix');
+  const hours = parseFloat(document.getElementById('hours').value) || 0;
+  const grade = parseFloat(document.getElementById('grade').value) || 1;
+  const exception = parseFloat(document.getElementById('exception').value) || 0;
+
+  let weightedRate = 0;
+  let mixTotal = 0;
+  for(let i=0; i<rates.length; i++){
+    const r = parseFloat(rates[i].value) || 0;
+    const m = parseFloat(mixes[i].value) || 0;
+    weightedRate += r * (m/100);
+    mixTotal += m;
+  }
+
+  const effectiveHours = hours * (1 - exception/100);
+  const target = weightedRate * effectiveHours * grade;
+
+  document.getElementById('output').innerHTML = Math.round(target) + ' <span>items</span>';
+  document.getElementById('breakdown').textContent =
+    `Weighted rate: ${weightedRate.toFixed(2)}/hr · Effective hours: ${effectiveHours.toFixed(2)} · Mix total: ${mixTotal}%` +
+    (mixTotal !== 100 ? '  ⚠ mix should total 100%' : '');
+}
+
+function addRow(){
+  const tbody = document.getElementById('rows');
+  const rowCount = tbody.children.length + 1;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td class="row-label">Type ${String.fromCharCode(64+rowCount)}</td>
+    <td><input type="number" class="rate" value="0" min="0"></td>
+    <td><input type="number" class="mix" value="0" min="0" max="100"></td>
+  `;
+  tbody.appendChild(tr);
+  attachListeners();
+  calculate();
+}
+
+function attachListeners(){
+  document.querySelectorAll('input, select').forEach(el => {
+    el.removeEventListener('input', calculate);
+    el.addEventListener('input', calculate);
+  });
+}
+
+attachListeners();
+calculate();
+</script>
+</body>
+</html>
