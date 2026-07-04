@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — MetricForge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#1B2A4A;
+    --teal:#00C2A8;
+    --slate:#5C6B7A;
+    --offwhite:#F7F9FB;
+    --amber:#FFB020;
+    --border: rgba(27,42,74,0.10);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:'Inter', sans-serif; background:var(--offwhite); color:var(--navy); line-height:1.6; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3,.brand{font-family:'Poppins', sans-serif;}
+  a{text-decoration:none; color:inherit;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
+
+  nav{position:sticky; top:0; z-index:50; background:rgba(247,249,251,0.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--border);}
+  nav .wrap{display:flex; align-items:center; justify-content:space-between; height:72px;}
+  .brand{font-weight:800; font-size:1.35rem; letter-spacing:-0.02em; color:var(--navy); display:flex; align-items:center; gap:8px;}
+  .brand-mark{width:12px; height:12px; background:var(--teal); border-radius:3px; display:inline-block; transform:rotate(45deg);}
+  .nav-links{display:flex; gap:36px; align-items:center;}
+  .nav-links a{font-weight:500; font-size:0.95rem; color:var(--slate); transition:color .15s;}
+  .nav-links a:hover{color:var(--navy);}
+  .nav-links a.active{color:var(--navy); font-weight:600;}
+  .nav-cta{background:var(--navy); color:#fff !important; padding:10px 20px; border-radius:8px; font-weight:600; font-size:0.9rem;}
+
+  header.page-head{padding:72px 0 48px;}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:0.8rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--teal); background:rgba(0,194,168,0.08); border:1px solid rgba(0,194,168,0.25); padding:6px 14px; border-radius:999px; margin-bottom:24px;}
+  header.page-head h1{font-size:2.6rem; font-weight:800; letter-spacing:-0.03em; max-width:640px; color:var(--navy);}
+  header.page-head p{color:var(--slate); max-width:560px; margin-top:16px; font-size:1.05rem;}
+
+  /* filter row */
+  .filter-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:32px;}
+  .filter-pill{border:1px solid var(--border); padding:8px 16px; border-radius:999px; font-size:0.85rem; font-weight:600; color:var(--slate); background:#fff;}
+  .filter-pill.active{background:var(--navy); color:#fff; border-color:var(--navy);}
+
+  /* featured post */
+  .featured{background:#fff; border:1px solid var(--border); border-radius:16px; padding:0; display:grid; grid-template-columns:1fr 1fr; overflow:hidden; margin:40px 0 64px;}
+  .featured-media{background:linear-gradient(135deg, var(--navy), #223a63); position:relative; padding:40px; display:flex; align-items:flex-end;}
+  .featured-media .tag{color:var(--teal); font-weight:700; font-size:2.4rem; opacity:0.35; font-family:'Poppins';}
+  .featured-body{padding:44px;}
+  .post-meta{display:flex; gap:14px; align-items:center; font-size:0.82rem; color:var(--slate); margin-bottom:16px;}
+  .post-meta .cat{color:var(--teal); font-weight:700; text-transform:uppercase; letter-spacing:0.05em; font-size:0.75rem;}
+  .featured-body h2{font-size:1.5rem; font-weight:700; color:var(--navy); margin-bottom:12px; letter-spacing:-0.01em;}
+  .featured-body p{color:var(--slate); font-size:0.98rem; margin-bottom:20px;}
+  .read-link{color:var(--navy); font-weight:600; font-size:0.9rem; display:inline-flex; align-items:center; gap:6px;}
+
+  /* post grid */
+  .section-tag{color:var(--teal); font-weight:600; font-size:0.85rem; letter-spacing:0.06em; text-transform:uppercase;}
+  .section-head h2{font-size:1.6rem; font-weight:700; margin-top:8px; color:var(--navy);}
+  .post-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:36px;}
+  .post-card{border:1px solid var(--border); border-radius:12px; background:#fff; overflow:hidden; display:flex; flex-direction:column; transition:border-color .15s, transform .15s;}
+  .post-card:hover{border-color:var(--teal); transform:translateY(-3px);}
+  .post-thumb{height:120px; background:var(--offwhite); border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-family:'Poppins'; font-weight:800; font-size:1.8rem; color:rgba(27,42,74,0.12);}
+  .post-body{padding:22px;}
+  .post-body h3{font-size:1.05rem; font-weight:600; color:var(--navy); margin-bottom:10px; line-height:1.35;}
+  .post-body p{color:var(--slate); font-size:0.88rem; margin-bottom:16px;}
+
+  /* subscribe band */
+  .subscribe{background:var(--navy); border-radius:18px; padding:56px; margin:80px 0 40px; display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap;}
+  .subscribe h2{color:#fff; font-size:1.6rem; font-weight:700; max-width:420px;}
+  .subscribe p{color:rgba(255,255,255,0.6); margin-top:8px; font-size:0.92rem;}
+  .sub-form{display:flex; gap:10px; flex-wrap:wrap;}
+  .sub-form input{padding:13px 16px; border-radius:8px; border:none; font-family:'Inter'; font-size:0.9rem; min-width:220px;}
+  .sub-form button{background:var(--amber); color:var(--navy); border:none; padding:13px 22px; border-radius:8px; font-weight:700; font-size:0.9rem; cursor:pointer;}
+
+  footer{padding:40px 0; border-top:1px solid var(--border);}
+  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;}
+  footer .foot-links{display:flex; gap:28px;}
+  footer .foot-links a{color:var(--slate); font-size:0.9rem;}
+  footer .copyright{color:var(--slate); font-size:0.85rem;}
+
+  @media(max-width:860px){
+    header.page-head h1{font-size:2rem;}
+    .featured{grid-template-columns:1fr;}
+    .featured-media{padding:28px;}
+    .post-grid{grid-template-columns:1fr;}
+    .subscribe{flex-direction:column; text-align:center; padding:40px 24px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="nav-links">
+      <a href="index.html#templates">Templates</a>
+      <a href="index.html#services">Services</a>
+      <a href="blog.html" class="active">Blog</a>
+      <a href="index.html#contact" class="nav-cta">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="page-head">
+    <span class="eyebrow">● Updated regularly</span>
+    <h1>Notes on building analytics that ops teams actually use</h1>
+    <p>Dashboards, formulas, and automation scripts — written from real builds, with the sample data swapped in so you can follow along.</p>
+
+    <div class="filter-row">
+      <span class="filter-pill active">All posts</span>
+      <span class="filter-pill">Power BI</span>
+      <span class="filter-pill">Excel</span>
+      <span class="filter-pill">Automation</span>
+      <span class="filter-pill">Case studies</span>
+    </div>
+  </header>
+
+  <!-- Featured post -->
+  <div class="featured">
+    <div class="featured-media"><span class="tag">01</span></div>
+    <div class="featured-body">
+      <div class="post-meta"><span class="cat">Case study</span><span>·</span><span>8 min read</span></div>
+      <h2>Setting fair daily targets when every task isn't equal</h2>
+      <p>A walkthrough of building a weighted-output calculator for teams handling mixed task types — the formula, the edge cases, and why a flat daily quota usually isn't fair to anyone.</p>
+      <a href="#" class="read-link">Read the full post →</a>
+    </div>
+  </div>
+
+  <div class="section-head">
+    <div class="section-tag">Latest</div>
+    <h2>All posts</h2>
+  </div>
+
+  <div class="post-grid">
+    <div class="post-card">
+      <div class="post-thumb">PB</div>
+      <div class="post-body">
+        <div class="post-meta"><span class="cat">Power BI</span><span>·</span><span>6 min</span></div>
+        <h3>Star schema basics for a daily production dashboard</h3>
+        <p>Why a proper fact/dimension split saves you from broken DAX measures later.</p>
+        <a href="#" class="read-link">Read →</a>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-thumb">DX</div>
+      <div class="post-body">
+        <div class="post-meta"><span class="cat">Power BI</span><span>·</span><span>5 min</span></div>
+        <h3>Three DAX measures every ops dashboard needs</h3>
+        <p>Rolling averages, exception rates, and target variance — explained with sample data.</p>
+        <a href="#" class="read-link">Read →</a>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-thumb">EX</div>
+      <div class="post-body">
+        <div class="post-meta"><span class="cat">Excel</span><span>·</span><span>4 min</span></div>
+        <h3>Filtering top performers without manual cross-checking</h3>
+        <p>Using COUNTIFS and MINIFS together to automate an eligibility list.</p>
+        <a href="#" class="read-link">Read →</a>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-thumb">AU</div>
+      <div class="post-body">
+        <div class="post-meta"><span class="cat">Automation</span><span>·</span><span>7 min</span></div>
+        <h3>Sending personalized emails straight from a spreadsheet</h3>
+        <p>Template variables, attachments, and error handling — no add-ins required.</p>
+        <a href="#" class="read-link">Read →</a>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-thumb">CS</div>
+      <div class="post-body">
+        <div class="post-meta"><span class="cat">Case study</span><span>·</span><span>9 min</span></div>
+        <h3>What we changed after coders said targets felt unfair</h3>
+        <p>The feedback, the fix, and how the new model held up over a full quarter.</p>
+        <a href="#" class="read-link">Read →</a>
+      </div>
+    </div>
+    <div class="post-card">
+      <div class="post-thumb">WF</div>
+      <div class="post-body">
+        <div class="post-meta"><span class="cat">Automation</span><span>·</span><span>5 min</span></div>
+        <h3>Picking between Make.com and a Python script</h3>
+        <p>When no-code is enough, and when it starts costing you more than it saves.</p>
+        <a href="#" class="read-link">Read →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="subscribe">
+    <div>
+      <h2>New posts land here first</h2>
+      <p>One email when something new ships — no spam, unsubscribe anytime.</p>
+    </div>
+    <form class="sub-form" name="blog-subscribe" method="POST" data-netlify="true">
+      <input type="hidden" name="form-name" value="blog-subscribe" />
+      <input type="email" name="email" placeholder="you@email.com" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="foot-links">
+      <a href="index.html#templates">Templates</a>
+      <a href="index.html#services">Services</a>
+      <a href="blog.html">Blog</a>
+    </div>
+    <div class="copyright">© 2026 MetricForge. All posts use demo data only.</div>
+  </div>
+</footer>
+
+</body>
+</html>
