@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sending personalized emails straight from a spreadsheet — MetricForge</title>
+<meta name="description" content="Template variables, per-row attachments, and error handling for spreadsheet-to-email automation — no mail-merge add-ins required.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+  .post-hero{padding:72px 0 40px; max-width:760px; margin:0 auto;}
+  .post-meta{display:flex; gap:14px; align-items:center; font-size:0.85rem; color:var(--slate); margin-bottom:20px;}
+  .post-meta .cat{color:var(--teal); font-weight:700; text-transform:uppercase; letter-spacing:0.05em; font-size:0.78rem;}
+  .post-hero h1{font-size:2.4rem; font-weight:800; letter-spacing:-0.02em; line-height:1.15;}
+  .post-hero .lede{color:var(--slate); font-size:1.1rem; margin-top:18px;}
+  article{max-width:760px; margin:0 auto; padding:24px 24px 64px;}
+  article h2{font-size:1.45rem; font-weight:700; margin:44px 0 16px; color:var(--navy);}
+  article p{color:#3a4757; margin-bottom:18px; font-size:1rem;}
+  article ul{margin:0 0 18px 22px; color:#3a4757;}
+  article li{margin-bottom:8px;}
+  pre{background:var(--navy); color:#e8edf5; border-radius:10px; padding:20px 24px; overflow-x:auto; font-size:0.85rem; margin:20px 0; line-height:1.5;}
+  code{font-family:'Consolas', monospace;}
+  .note-box{background:rgba(255,176,32,0.1); border:1px solid rgba(255,176,32,0.4); border-radius:10px; padding:18px 22px; margin:24px 0; font-size:0.92rem; color:#5a4a1e;}
+  .post-cta{background:#fff; border:1px solid var(--border); border-radius:14px; padding:32px; margin-top:48px; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;}
+  .post-cta h3{font-size:1.15rem; margin-bottom:6px;}
+  .post-cta p{color:var(--slate); font-size:0.9rem; margin:0;}
+  @media(max-width:860px){ .post-hero h1{font-size:1.8rem;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="../index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="nav-links">
+      <a href="../templates.html">Templates</a>
+      <a href="../services.html">Services</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html" class="nav-cta">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="post-hero">
+    <div class="post-meta"><span class="cat">Automation</span><span>·</span><span>7 min read</span><span>·</span><span>Demo data</span></div>
+    <h1>Sending personalized emails straight from a spreadsheet</h1>
+    <p class="lede">If your team's monthly routine involves opening fifty emails, one per person, copy-pasting a name and a number into each one — that's an afternoon you can get back with about sixty lines of Python.</p>
+  </header>
+</div>
+
+<article>
+  <h2>The manual version, and why it doesn't scale</h2>
+  <p>Mail merge add-ins exist, but most require a specific email client version, break silently on attachments, and offer no visibility when a send fails partway through fifty recipients. A small script gives you full control over all three: template variables, attachments, and error handling.</p>
+
+  <h2>The building blocks</h2>
+  <p>Three pieces make this work reliably:</p>
+  <ul>
+    <li><strong>A source spreadsheet</strong> — one row per recipient, with columns matching your template variables (name, department, score, etc.)</li>
+    <li><strong>A template</strong> — plain text or HTML with placeholders like <code>{{name}}</code> that get replaced per row</li>
+    <li><strong>A send loop with logging</strong> — so a failure on row 32 doesn't silently stop rows 33 through 50, and you know exactly which ones need a retry</li>
+  </ul>
+
+  <h2>Template variables, worked example</h2>
+  <p>A row in your spreadsheet might look like: <code>name=Jordan, department=Coding Ops, score=96</code>. Your template body:</p>
+  <pre><code>Hi {{name}},
+
+Your quality score for this cycle was {{score}}% in {{department}}.
+Great work — details are attached.</code></pre>
+  <p>The script reads each row, does a straightforward string replace for every <code>{{variable}}</code>, and sends. No manual copy-paste, and the same template serves every recipient.</p>
+
+  <h2>Attachments, per recipient</h2>
+  <p>The part that trips people up: attachments usually need to be different per person (an individual report, not the same PDF for everyone). The reliable pattern is naming files predictably — e.g. <code>report_{{employee_id}}.pdf</code> — so the script can look up the matching file for each row rather than you attaching them by hand.</p>
+
+  <h2>Error handling that actually helps</h2>
+  <p>Wrap each send in a try/except, and log successes and failures to a separate results column in the same spreadsheet — not just a console printout that disappears when the terminal closes. That way, re-running the script only needs to process rows marked "failed," instead of resending to everyone.</p>
+
+  <div class="note-box">
+    <strong>Note:</strong> Variable names and figures here are illustrative. The pattern — template, per-row lookup, logged send — is what transfers to your own data.
+  </div>
+
+  <h2>What this replaces</h2>
+  <p>For a fifty-person monthly send, this typically turns a 45-minute manual task into a two-minute script run — with a log showing exactly what went out and to whom, which is more auditable than the manual version ever was.</p>
+
+  <div class="post-cta">
+    <div>
+      <h3>Want the working script?</h3>
+      <p>The Bulk Email Automation Kit implements this exact pattern for Outlook, with template variables and attachment handling built in.</p>
+    </div>
+    <a href="../templates.html" class="btn-primary">View the template →</a>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <a href="../index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="foot-links">
+      <a href="../templates.html">Templates</a>
+      <a href="../services.html">Services</a>
+      <a href="../blog.html">Blog</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </div>
+    <div class="copyright">© 2026 MetricForge. All posts use demo data only.</div>
+  </div>
+</footer>
+
+</body>
+</html>

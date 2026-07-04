@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star schema basics for a daily production dashboard — MetricForge</title>
+<meta name="description" content="Why a proper fact/dimension split saves your Power BI dashboard from broken DAX measures later — with a worked example.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+<style>
+  .post-hero{padding:72px 0 40px; max-width:760px; margin:0 auto;}
+  .post-meta{display:flex; gap:14px; align-items:center; font-size:0.85rem; color:var(--slate); margin-bottom:20px;}
+  .post-meta .cat{color:var(--teal); font-weight:700; text-transform:uppercase; letter-spacing:0.05em; font-size:0.78rem;}
+  .post-hero h1{font-size:2.4rem; font-weight:800; letter-spacing:-0.02em; line-height:1.15;}
+  .post-hero .lede{color:var(--slate); font-size:1.1rem; margin-top:18px;}
+  article{max-width:760px; margin:0 auto; padding:24px 24px 64px;}
+  article h2{font-size:1.45rem; font-weight:700; margin:44px 0 16px; color:var(--navy);}
+  article p{color:#3a4757; margin-bottom:18px; font-size:1rem;}
+  article ul{margin:0 0 18px 22px; color:#3a4757;}
+  article li{margin-bottom:8px;}
+  .diagram{background:#fff; border:1px solid var(--border); border-radius:12px; padding:28px; margin:24px 0; text-align:center; font-family:'Poppins'; font-size:0.85rem; color:var(--navy);}
+  .diagram .fact{background:var(--navy); color:#fff; padding:14px 20px; border-radius:8px; display:inline-block; margin:10px;}
+  .diagram .dim{background:var(--offwhite); border:1px solid var(--border); padding:10px 16px; border-radius:8px; display:inline-block; margin:6px; font-size:0.8rem; color:var(--slate);}
+  .note-box{background:rgba(255,176,32,0.1); border:1px solid rgba(255,176,32,0.4); border-radius:10px; padding:18px 22px; margin:24px 0; font-size:0.92rem; color:#5a4a1e;}
+  .post-cta{background:#fff; border:1px solid var(--border); border-radius:14px; padding:32px; margin-top:48px; display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap;}
+  .post-cta h3{font-size:1.15rem; margin-bottom:6px;}
+  .post-cta p{color:var(--slate); font-size:0.9rem; margin:0;}
+  @media(max-width:860px){ .post-hero h1{font-size:1.8rem;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="../index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="nav-links">
+      <a href="../templates.html">Templates</a>
+      <a href="../services.html">Services</a>
+      <a href="../blog.html" class="active">Blog</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html" class="nav-cta">Get in touch</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap">
+  <header class="post-hero">
+    <div class="post-meta"><span class="cat">Power BI</span><span>·</span><span>6 min read</span><span>·</span><span>Demo data</span></div>
+    <h1>Star schema basics for a daily production dashboard</h1>
+    <p class="lede">A single flat table works fine for ten rows. At the scale of a real production dashboard, it's what quietly breaks your DAX measures three months in. Here's the model that holds up.</p>
+  </header>
+</div>
+
+<article>
+  <h2>Why a flat table breaks down</h2>
+  <p>The tempting first move is to build one big table: date, employee, project, task type, count, quality score, all in one sheet. It works for a demo. It stops working the moment you need a measure like "average daily count per employee, filtered by project, compared to last month" — because every dimension is duplicated on every row, and DAX has no clean way to filter one without dragging the others along inconsistently.</p>
+
+  <h2>The fix: separate facts from dimensions</h2>
+  <p>A star schema splits your data into one <strong>fact table</strong> (the numbers that happened — counts, scores, hours) and several <strong>dimension tables</strong> (the things those numbers describe — who, what project, what date, what task type). The fact table holds foreign keys pointing to each dimension.</p>
+
+  <div class="diagram">
+    <div class="dim">Dim_Employee</div>
+    <div class="dim">Dim_Date</div><br>
+    <span class="fact">Fact_Production</span><br>
+    <div class="dim">Dim_Project</div>
+    <div class="dim">Dim_TaskType</div>
+  </div>
+
+  <p>Each dimension connects to the fact table with a single relationship, always filtering from dimension to fact (one-to-many). This is what lets a slicer on "Project" correctly filter every measure without you writing custom logic for each one.</p>
+
+  <h2>What goes in the date dimension</h2>
+  <p>This is the one people skip and regret. A dedicated date table — not just the dates that happen to appear in your fact table — is what makes rolling averages, month-over-month comparisons, and "same day last month" measures possible at all in DAX. It needs one row per calendar day, plus columns for week number, month name, and fiscal period if your reporting cycle isn't a calendar month.</p>
+
+  <h2>A measure that only works with this structure</h2>
+  <p>Once the model is in place, a rolling 7-day average measure becomes a few lines instead of a workaround:</p>
+  <ul>
+    <li><code>CALCULATE(AVERAGE(Fact_Production[Count]), DATESINPERIOD(Dim_Date[Date], MAX(Dim_Date[Date]), -7, DAY))</code></li>
+  </ul>
+  <p>Try writing that against a flat table with repeated date columns and you'll end up filtering on the wrong grain half the time — usually silently, which is worse than an error.</p>
+
+  <div class="note-box">
+    <strong>Note:</strong> Figures and table names here are illustrative. The modeling principle is what to take away — apply it to your own team's actual dimensions.
+  </div>
+
+  <h2>The one-time cost that pays off</h2>
+  <p>Restructuring an existing flat-table report into a star schema takes a focused afternoon, not a rebuild. The payoff shows up every time someone asks for "one more view" — instead of a new flat export, it's a new measure against a model that already knows how everything relates.</p>
+
+  <div class="post-cta">
+    <div>
+      <h3>Want the dashboard template this is based on?</h3>
+      <p>The Ops Production Dashboard template ships with this exact star schema, pre-built and ready to connect to your data.</p>
+    </div>
+    <a href="../templates.html" class="btn-primary">View the template →</a>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <a href="../index.html" class="brand"><span class="brand-mark"></span>MetricForge</a>
+    <div class="foot-links">
+      <a href="../templates.html">Templates</a>
+      <a href="../services.html">Services</a>
+      <a href="../blog.html">Blog</a>
+      <a href="../about.html">About</a>
+      <a href="../contact.html">Contact</a>
+    </div>
+    <div class="copyright">© 2026 MetricForge. All posts use demo data only.</div>
+  </div>
+</footer>
+
+</body>
+</html>
